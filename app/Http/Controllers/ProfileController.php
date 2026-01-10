@@ -22,15 +22,13 @@ class ProfileController extends Controller
     ]);
   }
 
-  public function update(User $user ,Request $request)
-  {
+  public function update(Request $request, User $user)
+{
     $validated = $request->validate([
-      'name' => 'required',
-      'email' => 'required',
+        'name'  => 'required|string|max:255',
+        'email' => 'required|email|max:255',
     ]);
 
-    $user =Auth::user();
-    
     $user->update($validated);
 
     return redirect('/users/profile/index');

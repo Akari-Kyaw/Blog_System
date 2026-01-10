@@ -81,7 +81,7 @@ Route::post('/users/blogs/index',[UserController::class,'searchCategory']);
 Route::get('/users/blogs/index/{cid}',[UserController::class,'showByCategory']);
 Route::get('/users/blogs/create',[UserController::class,'create']);
 Route::post('/users/blogs',[UserController::class,'store']);
-Route::get('/users/blogs/{blog}',[UserController::class,'show']);
+Route::get('/users/blogs/{blog}',[UserController::class,'show']) ->middleware('auth');
 Route::get('/users/blogs/{blog}/edit',[UserController::class,'edit']);
 Route::patch('/users/blogs/{blog}/update',[UserController::class,'update']);
 Route::delete('/users/blogs/{blog}',[UserController::class,'destroy']);

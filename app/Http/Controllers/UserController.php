@@ -68,21 +68,47 @@ class UserController extends Controller
         }
         return redirect('/users/blogs/index');
     }
-    public function show(blog $blog)
-    {
-        $favourites = auth()->user()->favourites()->pluck('blog_id');
-        $isFavourite = $favourites->contains($blog->id);
+    // public function show(blog $blog)
+    // {
+    //      if (!auth()->check()) {
+    //     return redirect()->route('login');
+    // }
+    //     $favourites = auth()->user()->favourites()->pluck('blog_id');
+    //     $isFavourite = $favourites->contains($blog->id);
 
-        $like = auth()->user()->likes()->pluck('blog_id');
-        $isLike = $like->contains($blog->id);
-        return view('frontend.users.show', [
-            'blog' => $blog,
-            'isFavourite'=>$isFavourite,
-            'isLike'=>$isLike,
-            'favourite'=>favourite::all()
+    //     $like = auth()->user()->likes()->pluck('blog_id');
+    //     $isLike = $like->contains($blog->id);
+    //     return view('frontend.users.show', [
+    //         'blog' => $blog,
+    //         'isFavourite'=>$isFavourite,
+    //         'isLike'=>$isLike,
+    //         'favourite'=>favourite::all()
 
-        ]);
+    //     ]);
+    // }
+
+public function show(blog $blog)
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
+
+    $user = auth()->user();
+
+    $favourites = $user->favourites()->pluck('blog_id');
+    $isFavourite = $favourites->contains($blog->id);
+
+    $likes = $user->likes()->pluck('blog_id');
+    $isLike = $likes->contains($blog->id);
+
+    return view('frontend.users.show', [
+        'blog' => $blog,
+        'isFavourite' => $isFavourite,
+        'isLike' => $isLike,
+    ]);
+}
+
+
     public function edit(Blog $blog){
         return view('frontend.users.edit', [
             'blog'=>$blog,

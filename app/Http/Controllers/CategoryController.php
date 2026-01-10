@@ -10,9 +10,9 @@ class CategoryController extends Controller
   public function index()
   {
     return view('backend.categories.index', [
-      'categories' => category::all()
+      'categories' => category::latest()->paginate(10)
     ]);
-   $categories = auth()->user()->categories()->latest()->paginate(10);
+   //$categories = auth()->user()->categories()->latest()->paginate(10);
 
     return view('frontend.users.index', [
       'categories' => category::all()

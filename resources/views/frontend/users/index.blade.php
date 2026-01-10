@@ -41,7 +41,12 @@
         @endforeach
         
 {{$blogs->links()}}
-       
+       @guest
+    <a href="{{ route('login') }}" class="btn btn-warning">
+        Login
+    </a>
+@endguest
+
 
       </div>
 

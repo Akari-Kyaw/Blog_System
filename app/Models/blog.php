@@ -19,13 +19,13 @@ class blog extends Model
     return $this->belongsToMany(tag::class);
  }
  public function likes(){
-   return $this->hasmany(like::class);
+   return $this->hasMany(like::class);
 }
 public function comments(){
-   return $this->hasmany(Comment::class);
+   return $this->hasMany(Comment::class);
 }
 public function favourites(){
-   return $this->hasmany(favourite::class);
+   return $this->hasMany(favourite::class);
 }
 public function user(){
    return $this->belongsTo(User::class);
