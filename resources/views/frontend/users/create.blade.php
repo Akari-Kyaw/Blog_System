@@ -1,8 +1,9 @@
 @extends("layouts.userlayout")
 
 @section('content')
-<h1 class="text-center">Create New Blog</h1>
+<h3 class="text-center">Create New Blog</h3>
 
+<div class="container">
 <form action="/users/blogs" method="post" enctype="multipart/form-data">
     @csrf
     <label for="title">Title</label>
@@ -53,6 +54,7 @@
     <button class="btn btn-success mt-3">Create</button>
     <a href="/users/blogs/index" class="btn btn-primary mt-3">Back</a>
 </form>
+</div>
 @section('script')
 <script>
     $(document).ready(function() {

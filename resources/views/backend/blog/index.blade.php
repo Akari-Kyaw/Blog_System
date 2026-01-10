@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-between align-items-center m-3">
 <h1>Blog</h1>
 <a href="{{route('blogs.create')}}" class="btn btn-success ">Create New Blog</a>
 </div>

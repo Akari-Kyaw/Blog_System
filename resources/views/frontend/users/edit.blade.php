@@ -1,7 +1,8 @@
 @extends("layouts.userlayout")
 @section('content')
-<h1 class="text-center">Edit Blog</h1>
+<h3 class="text-center">Edit Blog</h3>
 
+<div class="container">
 <form action="/users/blogs/{{$blog->id}}/update" method="post" enctype="multipart/form-data">
     @method ('patch')
     @csrf
@@ -52,6 +53,7 @@
     <button class="btn btn-success mt-3">Update</button>
     <a href="/users/blogs/index" class="btn btn-primary mt-3">Back</a>
 </form>
+</div>
 @section('script')
 <script>
     $(document).ready(function() {

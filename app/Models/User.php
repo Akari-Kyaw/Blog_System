@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\favourite;
+use App\Models\tag;
+use App\Models\blog;
+use App\Models\Comment;
+use App\Models\like;
 
+/**
+ * @method \Illuminate\Database\Eloquent\Relations\HasMany likes()
+ * @method \Illuminate\Database\Eloquent\Relations\HasMany favourites()
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -38,28 +47,25 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     public function blogs()
     {
-        return $this->hasmany(blog::class);
+        return $this->hasMany(blog::class);
     }
     public function comments()
     {
-        return $this->hasmany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
     public function likes()
     {
-        return $this->hasmany(like::class);
+        return $this->hasMany(like::class);
     }
     public function favourites()
     {
-        return $this->hasmany(favourite::class);
+        return $this->hasMany(favourite::class);
     }
 }

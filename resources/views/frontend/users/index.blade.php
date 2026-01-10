@@ -20,7 +20,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $blog ->title }}</h5>
                 <div class="d-flex justify-content-between">
-                    <h5 class="px-3 py-2 rounded-pill bg-warning">{{$blog->category->name}} </h5>
+                    <h5 class="px-3 py-2 rounded-pill bg-warning mt-4">{{$blog->category->name}} </h5>
                     <small>
                         {{$blog->created_at}}
                     </small>
@@ -30,7 +30,7 @@
                     by <b>{{$blog->user->name}}</b>
                     {{ $blog->created_at->diffForHumans() }}
                 </div>
-                <img src="/storage/blogs/{{ $blog->image }}" alt="" height="400px" >
+                <img src="{{ asset('storage/'.$blog->image) }}" alt="" height="400px" >
                  <!-- <img src="/storage/blogs/eyeliner.jpg" alt=""> -->
                 <p class="card-text">{{substr(($blog->body),0,100 ) }}..........</p>
                 <a class="card-link btn btn-primary" href="/users/blogs/{{$blog->id}}">
@@ -52,8 +52,8 @@
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
-            <form action="{{url('/users/blogs/index')}}" method="post">
-              @csrf
+            <form action="{{url('/users/blogs/index')}}" method="get">
+             
               <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Search for...">
                 <span class="input-group-append">

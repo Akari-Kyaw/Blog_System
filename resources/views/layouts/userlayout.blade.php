@@ -8,23 +8,23 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SocialSphere</title>
+  <title>Blog</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link rel="stylesheet" href="=/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
   <!-- Custom styles for this template -->
   <link href="{{asset('css/blog-home.css')}}" rel="stylesheet">
   <script src="https://kit.fontawesome.com/665ab9631f.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="/users/blogs/index">SocialSphere</a>
+      <a class="navbar-brand" href="/users/blogs/index">Blog</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -86,18 +86,19 @@
         </ul>
       </div>
     </div>
+   
   </nav>
 
   <!-- Page Content -->
-  <div>
+  <main class="flex-grow-1 pt-5">
     @yield('content')
-  </div>
+  </main>
   <!-- /.container -->
 
   <!-- Footer -->
-  <footer class="py-5 bg-dark">
+   <footer class="bg-dark text-white py-2 mt-auto">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; A</p>
+      <p class="m-0 text-center">Copyright &copy; A</p>
     </div>
     <!-- /.container -->
   </footer>

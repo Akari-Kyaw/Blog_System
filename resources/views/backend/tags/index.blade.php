@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-<div class="d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-between align-items-center m-3">
   <h1>Tags</h1>
   <a href="/tags/create" class="btn btn-success ">Create New Tag</a>
 </div>

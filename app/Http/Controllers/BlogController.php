@@ -18,7 +18,7 @@ class BlogController extends Controller
             'users'=> $user
 
         ]);
-   $blogs = auth()->user()->blogs()->latest()->paginate(5);
+   $blogs = auth()->user()->blog::blogs()->latest()->paginate(5);
 
         return view('frontend.users.index', [
             'blogs' => $blogs,
@@ -31,6 +31,30 @@ class BlogController extends Controller
             'blog' => $blog
         ]);
     }
+// public function index(Request $request)
+// {
+//     $query = Blog::with(['user', 'category']);
+
+//     // 🔍 Search
+//     if ($request->filled('search')) {
+//         $query->where('title', 'like', '%' . $request->search . '%')
+//               ->orWhere('body', 'like', '%' . $request->search . '%');
+//     }
+
+//     // 📂 Category filter (optional)
+//     if ($request->filled('category_id')) {
+//         $query->where('category_id', $request->category_id);
+//     }
+
+//     $blogs = $query->latest()
+//                    ->paginate(5)
+//                    ;
+
+//     return view('frontend.users.index', [
+//         'blogs' => $blogs,
+//         'categories' => Category::all(),
+//     ]);
+// }
     public function create()
     {
         return view('backend.blog.create', [
@@ -51,7 +75,8 @@ class BlogController extends Controller
             $request->validate([
                 'image' => 'image'
             ]);
-            $validate['image'] = $request->file('image')->store('blogs');
+          $validate['image'] = $request->file('image')->store('blogs', 'public');
+
         }
         $validate['user_id']=auth()->user()->id;
         $blog = Blog::create($validate);
@@ -69,7 +94,7 @@ class BlogController extends Controller
 
         ]);
     }
-    public function update(Blog $blog)
+    public function update(Request $request,Blog $blog)
     {
         
 
@@ -82,8 +107,11 @@ class BlogController extends Controller
             request()->validate([
                 'image' => 'image'
             ]);
-            unlink(storage_path() . "/app/public/$blog->image");
-            $validate['image'] = request()->file('image')->store('blogs');
+                  if ($blog->image && file_exists(storage_path('app/public/' . $blog->image))) {
+            unlink(storage_path('app/public/' . $blog->image));
+        }
+
+        $validate['image'] = $request->file('image')->store('blogs', 'public');
         }
         $blog->update($validate);
         $blog->tags()->sync(request()->tag_ids);
@@ -91,9 +119,10 @@ class BlogController extends Controller
     }
     public function destroy(Blog $blog)
     {
-        if ($blog->image) {
-            unlink(storage_path() . "/app/public/$blog->image");
-        }
+        
+    if ($blog->image && file_exists(storage_path('app/public/' . $blog->image))) {
+        unlink(storage_path('app/public/' . $blog->image));
+    }
         $blog->delete();
         return  redirect(route('blogs.index'));
     }

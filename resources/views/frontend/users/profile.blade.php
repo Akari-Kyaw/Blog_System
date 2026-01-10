@@ -1,6 +1,6 @@
 @extends("layouts.userlayout")
 @section("content")
-<div class="container">
+<div class="container mt-3">
     @foreach($users as $user)
     @auth
     @if($user->id==auth()->user()->id)
@@ -18,6 +18,10 @@
                 <!-- <a class="btn text-white" href="/userprofile/{{$user->id}}/edit" style="background-color: #3C5B6F;">Change Password</a> -->
                 
                 <a class="btn text-white" href="/userprofile/{{$user->id}}/profileedit" style="background-color: #4D869C;">Edit Profile</a>
+             
+         <form action="/users/blogs/index">
+            <button type="button" class="btn btn-dark" onclick="history.back()">Back</button>
+            </form>
             </div>
         </div>
         @auth
@@ -38,9 +42,7 @@
         </div>
         @endforeach
         @endauth
-        <form action="/users/blogs/index">
-            <button type="button" class="btn btn-dark" onclick="history.back()">Back</button>
-            </form>
+      
     </div>
     @endif
     @endauth
