@@ -40,7 +40,7 @@ public function edit(Tag $tag){
         $tag->update($validate);
      return redirect('/tags');
       }
-      public function delete(Tag $tag){
+      public function destroy(Tag $tag){
         $tag->delete();
         return redirect('/tags');
       }

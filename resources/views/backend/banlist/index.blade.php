@@ -1,9 +1,6 @@
 @extends('layout')
 @section('content')
 
-
-
-
 @if($is_banned->isEmpty())
 <div class="container mt-2">
     <div class="row justify-content-center">
@@ -24,9 +21,9 @@
 
 <!-- /.card-header -->
 
-<h1>Ban User Lists</h1>
+<h1 class="m-3">Ban User Lists</h1>
 
-<div class="card">
+<div class="card m-3">
 
     <div class="card-body">
         <table id="table" class="table table-bordered table-striped">

@@ -21,17 +21,17 @@
     @foreach($blog->tags as $tag)
     <span class="bg-{{$loop->even ? 'success':'primary'}} px-2 py-1 rounded-pill">{{$tag->name}}</span>
     @endforeach
-    <p class="ml-3">{!! nl2br($blog->body)!!}</p>
+    <p class="m-3">{!! nl2br($blog->body)!!}</p>
 
-    <div class="d-flex row justify-content-between m-4">
-        <div class="d-flex ">
+    <div class="d-flex row justify-content-between m-4 align-items-center">
+        <div class="d-flex align-items-center gap-3">
 
             @if($isLike)
 
             <form action="/userblogs/{{$blog->id}}/unlike" method="post">
                 @csrf
                 @method('delete')
-                <button class="btn pl-0"><i class="fa-solid fa-thumbs-up fa-xl"></i></button>
+                <button class="btn"><i class="fa-solid fa-thumbs-up fa-xl"></i></button>
             </form>
 
             @else
@@ -41,7 +41,7 @@
             </form>
             @endif
 
-            <div class="pt-2">{{ count($blog->likes) }}</div>
+            <span class="fw-semibold">{{ $blog->likes->count() }}</span>
 
             @if ($isFavourite)
             <form action="/userblogs/{{$blog->id}}/unfavourite" method="post">
@@ -85,7 +85,6 @@
             <li class="list-group-item active mt-3">
                 <b>Comments ({{ count($blog->comments) }})</b>
             </li>
-
             @foreach($blog->comments as $comment)
             <li class="list-group-item">
                 {{ $comment->content }}
@@ -94,60 +93,61 @@
                     {{ $comment->created_at->diffForHumans() }}
                 </div>
                 @auth
-                <div class=" d-flex justify-content-end">
+                <div class="d-flex justify-content-end">
                     @if($comment->user_id==auth()->user()->id)
-                    <!-- <button type="button" class="btn text-secondary" onclick="showEditForm('{{ $comment->id }}')">Edit</button> -->
                     <form action="/comments/{{$comment->id}}" method="post">
                         @csrf
                         @method('delete')
-                        <button class="btn btn-danger ms-3 mt-2 ">
+                        <button class="btn btn-danger ms-3 mt-2">
                             Delete
                         </button>
                     </form>
                     @endif
                 </div>
                 @endauth
+
                 <div id="editForm{{ $comment->id }}" style="display: none;">
-                <form action="/comments/{{$comment->id }}/update" method="post" class="d-inline">
-                    @csrf
-                    @method('patch')
-                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
-                    <textarea name="content" id="content"
-                        class="form-control">{{old('content')??$comment->content}}</textarea>
-                    @error('content')
-                    <p class="text-danger">{{$message}}</p>
-                    @enderror
-                    <div class="d-flex">
-                        <button class="btn btn-secondary mt-3 mb-3">Update</button>
-                </form>
-                <button class="btn btn-dark mt-3 mb-3 ms-3" onclick="hideEditForm('{{ $comment->id }}')">Cancel</button>
-            </div>
+                    <form action="/comments/{{$comment->id }}/update" method="post">
+                        @csrf
+                        @method('patch')
+                        <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                        <textarea name="content" id="content" class="form-control">{{ old('content') ?? $comment->content }}</textarea>
+                        @error('content')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-secondary mt-3 mb-3">Update</button>
+                        </div>
+                    </form>
+                    <button class="btn btn-dark mt-3 mb-3 ms-3" onclick="hideEditForm('{{ $comment->id }}')">Cancel</button>
+                </div>
             </li>
+            @endforeach
+    </ul>
 
-
-            
     </div>
-    @endforeach
-     @auth
+
+    @auth
     <form action="/blogs/{{$blog->id }}/comments" method="post">
         @csrf
         <textarea name="content" id="content" class="form-control" placeholder="Enter Your Comment"></textarea>
         @error('content')
         <p class="text-danger">{{$message}}</p>
         @enderror
-        <button class="btn btn-primary m-3 d-flex justify-content-end">Add Comment</button>
+        <div class="d-flex justify-content-between align-items-center m-3">
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+            <a href="javascript:history.back()" class="btn btn-dark">Back</a>
+        </div>
     </form>
     @endauth
-    <form action="/users/blogs/index">
-        <button type="button" class="btn btn-dark mb-3" onclick="history.back()">Back</button>
-    </form>
-    </ul>
-   
+
 </div>
+
+@endsection
+
 @section('script')
 <script>
     function showEditForm(id) {
-        console.log(id);
         document.getElementById('editForm' + id).style.display = 'block';
     }
 
@@ -155,8 +155,5 @@
         document.getElementById('editForm' + id).style.display = 'none';
     }
 </script>
-
-
-
 
 @endsection

@@ -16,7 +16,7 @@
 
         <!-- Blog Post -->
         @foreach($blogs as $blog)
-        <div class="card mb-2">
+        <div class="card mb-2 " style="max-width: 650px;">
             <div class="card-body">
                 <h5 class="card-title">{{ $blog ->title }}</h5>
                 <div class="d-flex justify-content-between">
@@ -30,7 +30,8 @@
                     by <b>{{$blog->user->name}}</b>
                     {{ $blog->created_at->diffForHumans() }}
                 </div>
-                <img src="{{ asset('storage/'.$blog->image) }}" alt="" height="400px" >
+                <img src="{{ asset('storage/'.$blog->image) }}" alt="" class="img-fluid d-block mx-auto my-2"
+  style="max-height: 200px; object-fit: cover;">
                  <!-- <img src="/storage/blogs/eyeliner.jpg" alt=""> -->
                 <p class="card-text">{{substr(($blog->body),0,100 ) }}..........</p>
                 <a class="card-link btn btn-primary" href="/users/blogs/{{$blog->id}}">
